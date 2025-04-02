@@ -73,4 +73,4 @@ export interface Store {
   history?: Version[];
 }
 
-export const store: Store = observable({});
+export let store: Store = observable({});
