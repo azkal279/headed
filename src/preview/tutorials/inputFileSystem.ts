@@ -20,8 +20,8 @@ export class InputFileSystemProvider implements vscode.FileSystemProvider {
   }
 
   readFile(uri: vscode.Uri): Uint8Array {
-    const inputName = path.basename(uri.path);
-    const input = this.files.get(inputName);
+    let inputName = path.basename(uri.path);
+    let input = this.files.get(inputName);
     return stringToByteArray(input);
   }
 
@@ -30,12 +30,12 @@ export class InputFileSystemProvider implements vscode.FileSystemProvider {
     content: Uint8Array,
     options: { create: boolean; overwrite: boolean }
   ): void {
-    const inputName = path.basename(uri.path);
+    let inputName = path.basename(uri.path);
     this.files.set(inputName, byteArrayToString(content));
   }
 
   delete(uri: vscode.Uri): void {
-    const inputName = path.basename(uri.path);
+    let inputName = path.basename(uri.path);
     this.files.delete(inputName);
   }
 
