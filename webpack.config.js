@@ -1,7 +1,7 @@
-const path = require("path");
-const webpack = require("webpack");
+let path = require("path");
+let webpack = require("webpack");
 
-const config = {
+let config = {
   mode: "development",
   entry: "./src/extension.ts",
   externals: {
@@ -74,7 +74,7 @@ const config = {
   },
 };
 
-const nodeConfig = {
+let nodeConfig = {
   ...config,
   target: "node",
   output: {
@@ -91,7 +91,7 @@ const nodeConfig = {
   },
 };
 
-const webConfig = {
+let webConfig = {
   ...config,
   target: "webworker",
   output: {
