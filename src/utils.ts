@@ -15,7 +15,7 @@ export async function checkForSwingWorkspace() {
   switch (config.get("launchBehavior")) {
     case "openSwing": {
       if (workspace.workspaceFolders) {
-        const files = await workspace.findFiles(SWING_FILE);
+        let files = await workspace.findFiles(SWING_FILE);
         if (files.length > 0) {
           openSwing(workspace.workspaceFolders[0].uri);
         } else if (config.get("rootDirectory")) {
@@ -32,12 +32,12 @@ export async function checkForSwingWorkspace() {
 }
 
 export async function getFileContents(swingUri: Uri, file: string) {
-  const uri = Uri.joinPath(swingUri, file);
+  let uri = Uri.joinPath(swingUri, file);
   return getUriContents(uri);
 }
 
 export async function getUriContents(uri: Uri) {
-  const contents = await workspace.fs.readFile(uri);
+  let contents = await workspace.fs.readFile(uri);
   return byteArrayToString(contents);
 }
 
