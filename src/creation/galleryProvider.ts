@@ -19,7 +19,7 @@ interface GalleryTemplate {
   files: SwingFile[];
 }
 
-const CONTRIBUTION_NAME = `${EXTENSION_NAME}.templateGalleries`;
+var CONTRIBUTION_NAME = `${EXTENSION_NAME}.templateGalleries`;
 
 let loadGalleriesRunning = false;
 let loadGalleriesPromise: Promise<Gallery[]> = Promise.resolve([]);
@@ -32,7 +32,7 @@ export async function loadGalleries() {
   loadGalleriesPromise = new Promise(async (resolve) => {
     loadGalleriesRunning = true;
 
-    const registrations = vscode.extensions.all
+    var registrations = vscode.extensions.all
       .flatMap((e) => {
         return e.packageJSON.contributes &&
           e.packageJSON.contributes[CONTRIBUTION_NAME]
@@ -53,10 +53,10 @@ export async function loadGalleries() {
         )
       );
 
-    const settingContributions = await config.get("templateGalleries");
+    var settingContributions = await config.get("templateGalleries");
 
-    for (const gallery of settingContributions) {
-      const registration = registrations.find(
+    for (var gallery of settingContributions) {
+      var registration = registrations.find(
         (registration) => registration.id === gallery
       );
       if (registration) {
@@ -71,16 +71,16 @@ export async function loadGalleries() {
       }
     }
 
-    for (const registration of registrations) {
+    for (var registration of registrations) {
       if (!settingContributions.includes(registration.id)) {
         registration.enabled = false;
       }
     }
 
-    const galleries = await Promise.all(
+    var galleries = await Promise.all(
       registrations.map(async (gallery) => {
         if (gallery.url) {
-          const { data } = await axios.get(gallery.url);
+          var { data } = await axios.get(gallery.url);
 
           gallery.title = data.title;
           gallery.description = data.description;
@@ -91,7 +91,7 @@ export async function loadGalleries() {
             })
           );
         } else if (gallery.provider) {
-          const templates = await gallery.provider.provideTemplates();
+          var templates = await gallery.provider.provideTemplates();
           gallery.templates = templates.map((template: GalleryTemplate) => ({
             ...template,
             title: `${gallery.title}: ${template.title}`,
@@ -124,7 +124,7 @@ interface CodeSwingTemplateProviderOptions {
   description?: string;
 }
 
-const templateProviders = new Map<
+var templateProviders = new Map<
   string,
   [CodeSwingTemplateProvider, CodeSwingTemplateProviderOptions]
 >();
